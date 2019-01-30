@@ -1,0 +1,18 @@
+
+/* Classes */
+.wrapper {
+    display: flex;
+    align-items: center;
+    min-height: 24em;
+    justify-content: center;
+}
+
+/* Classes */
+
+/* Text */
+
+p {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 20px;
+    font-size: 1rem;
+  }

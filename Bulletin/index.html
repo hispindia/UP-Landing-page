@@ -1,0 +1,146 @@
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
+</head>
+
+    <header class="titleArea left">
+        <img class="iconLarge centerYaxis" src="icons/Archive.png" alt="ArchiveIcon">
+        <h1>Your Bulletins:</h1>
+    </header>
+
+    <div class="devider left">
+
+    </div>
+
+    <main class="content left">
+          
+      <ol class="centerYaxis">
+      
+        <li class="centerYaxis">
+            <img class="iconMedium centerYaxis" src="icons/health-book-96.png" alt="HealthBookIcon">
+            <div id="title centerYaxis">Form 05 - DHQ STOCK UPHMIS Data Set</div>
+            <img class="iconSmall right centerYaxis" src="icons/download.png" alt="DownloadIcon">
+        </li>
+        <li class="centerYaxis">
+            <img class="iconMedium centerYaxis" src="icons/ecg-96.png" alt="ECGIcon">
+            <div id="title centerYaxis">Form 05 - DHQ STOCK UPHMIS Data Set</div>
+            <img class="iconSmall right centerYaxis" src="icons/download.png" alt="DownloadIcon">
+        </li>
+        <li class="centerYaxis">
+            <img class="iconMedium centerYaxis" src="icons/heart-health-96.png" alt="HeartHealthIcon">
+            <div id="title centerYaxis">Form 05 - DHQ STOCK UPHMIS Data Set</div>
+            <img class="iconSmall right centerYaxis" src="icons/download.png" alt="DownloadIcon">
+        </li>
+
+        <li class="centerYaxis">
+            <img class="iconMedium centerYaxis" src="icons/obituary-96.png" alt="ObituaryIcon">
+            <div id="title centerYaxis">Form 05 - DHQ STOCK UPHMIS Data Set</div>
+            <img class="iconSmall right centerYaxis" src="icons/download.png" alt="DownloadIcon">
+        </li>
+      
+      </ol>
+    </main>
+      
+
+
+<style>
+
+    body{
+        font-family: 'Roboto', sans-serif;
+        font-weight: lighter;
+        text-align: center;
+    }
+    .titleArea{
+        padding-right: 2vw;
+        padding-left: 2vw;
+    }
+    @media (max-width: 588px) {
+        .titleArea, .devider{
+            display: none;
+        }
+    }
+    p {
+        font-family: 'Roboto', sans-serif;
+        margin-top: auto;
+        margin-bottom: auto;
+        padding-bottom: 2vw;
+        font-size: 1rem;
+    }
+
+    h1{
+        color: #2a4d6d;
+        font-size: 1.5rem;
+    }
+
+    ol{
+        margin: 0;
+        padding: 0;
+    }
+  li{
+    
+    display: block;
+    width: 100%;
+    padding: 1vw 1vw 1vw 1vw;
+    /*border: 1px solid #f3f3f3;*/
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  li div {
+    display: inline;;
+  }
+  li #date {
+  
+  }
+  li #days {
+  
+  }
+  li #title {
+    margin-left: 5px;
+    margin-right: 20px;
+  }
+  li:hover {
+    background-color: #f3f3f3;
+  }
+  li .red {
+    color:red;
+  }
+
+  .centerYaxis{
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .iconLarge{
+      width: 20vw;
+      opacity: 1;
+  }
+  .iconMedium{
+      width: 4vw;
+      opacity: 0.8;
+  }
+  .iconSmall{
+      width: 2.5vw;
+      cursor: pointer;
+      padding-top: 2vw;
+  }
+
+  .right{
+      float: right
+  }
+
+  .left{
+      float: left;
+  }
+  .devider{
+      background-color: #201f1f;
+      width: 0.2vw;
+      height: 100%;
+      opacity: 0.9;
+  }
+
+  .content{
+    flex-direction: column;
+    justify-content: center;
+  }
+    </style>
