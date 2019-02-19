@@ -1,10 +1,12 @@
 
+
 /* Classes */
 .wrapper {
     display: flex;
     align-items: center;
-    min-height: 24em;
     justify-content: center;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
 }
 
 /* Classes */
@@ -13,6 +15,48 @@
 
 p {
     font-family: 'Roboto', sans-serif;
-    margin-top: 20px;
-    font-size: 1rem;
-  }
+    font-size: 2vw;
+    display: inline;
+    order: 1;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    vertical-align: top;
+}
+
+
+/* Icon */
+
+.appIcon{
+    float:left; 
+    margin-left: 0; 
+    margin-right: 2vw;
+    width: 2.5vw;
+}
+
+.small{
+    width: 2.2vw;
+    margin-left: 1vw;
+    order: 2;
+    float: right;
+}
+.small:hover{
+    cursor: pointer;
+}
+
+/*Elements*/
+
+ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+li:not(:first-of-type){
+    margin-top: 2vw;
+}
+
+body{
+    margin:0;
+}
+

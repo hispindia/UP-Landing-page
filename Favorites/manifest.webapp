@@ -1,6 +1,6 @@
 {
    "version": "0.1",
-   "name": "Favorites",
+   "name": "Favorites Quick Navigation",
    "description": "Favorites widget for dashboard",
    "launch_path": "/index.html",
    "appType": "DASHBOARD_WIDGET",
