@@ -22,3 +22,14 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 *.komodoproject
+
+# Packages #
+*.zip
+*.rar
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.tar
+
