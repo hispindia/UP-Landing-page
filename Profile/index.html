@@ -5,14 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
 </head>
 
+<script src="Initials.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+</script>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        getData(`https://play.dhis2.org/2.31dev/api/me`)
+        .then( function (data) {
+            $("#name").text(stripQuotation(JSON.stringify(data.displayName)))
+            $("#pic").attr("avatar", stripQuotation(JSON.stringify(data.displayName)))
+            $("#employer").text(stripQuotation(JSON.stringify(data.employer)))
+            $("#email").text("Email: " + stripQuotation(JSON.stringify(data.email)))
+            $("#phone").text("Phone: " + stripQuotation(JSON.stringify(data.phoneNumber)))
+            LetterAvatar.transform();
+        })
+        .catch(error => console.error(error));
+    });
+
+    function stripQuotation(string){
+        return string.replace(/(["'])/g, "")
+    }
+
+    function getData(url = ``) {
+        return fetch(url, {
+            method: "GET",
+            mode: "cors",
+            credentials: "include",
+        })
+        .then(response => response.json()); // parses response to JSON
+    }
+</script>
+
 <div id="wrapper">
     <header>
-        <img class="profilePicture" src="facility.png" alt="Profile piucture">
-        <h1>Banki Block</h1>
-        <h3>Barabanki District</h3>
+        <img id="pic" style="border-radius: 50%" width="150" height="150">
+        <h1 id="name">Loading..</h1>
+        <h3 id="employer">Please wait</h3>
     </header>
     <section>
-        <p>Phone Number: +91 73031 26916</p>
-        <p>Email Address: banki@dhis2.org</p>
+        <p id="phone"></p>
+        <p id="email"></p>
     </section>
 </div>
