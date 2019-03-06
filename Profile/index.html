@@ -17,7 +17,7 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-        getData(`https://play.dhis2.org/2.31dev/api/me`)
+        getData(`http://apps.hispindia.org/uphmis230/api/me`)
         .then( function (data) {
             $("#name").text(stripQuotation(JSON.stringify(data.displayName)))
             $("#pic").attr("avatar", stripQuotation(JSON.stringify(data.displayName)))
@@ -27,6 +27,7 @@
             LetterAvatar.transform();
         })
         .catch(error => console.error(error));
+        
     });
 
     function stripQuotation(string){
@@ -53,4 +54,7 @@
         <p id="phone"></p>
         <p id="email"></p>
     </section>
+    <footer>
+        <a id="edit" target="_parent" href="/uphmis230/dhis-web-user-profile/#/profile">Edit your profile</a>
+    </footer>
 </div>

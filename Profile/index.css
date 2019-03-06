@@ -14,6 +14,10 @@ h1,h3,p{
     padding-top: 5px;
 }
 
+a:visited{
+    color: blue;
+}
+
 p:first-of-type{
     font-weight: lighter; 
     margin: 0;
@@ -21,16 +25,15 @@ p:first-of-type{
     padding-top: 20px;
 }
 
+footer{
+    font-size: 0.8rem;
+    margin-top: 2vw;
+}
+
 h3{
     font-weight: lighter; 
     color: #2a4d6d;
 }
-
-a:link {
-    text-decoration: none;
-    color: black;
-}
-
 #wrapper{
     display: flex;
     flex-wrap: wrap;
