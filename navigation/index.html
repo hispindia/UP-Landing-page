@@ -5,38 +5,69 @@
 </head>
 <body scroll="no" style="overflow: hidden">
 
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            getData(`http://apps.hispindia.org/uphmis230/dhis-web-commons/menu/getModules.action?_=1560855434570`)
+            .then( function (data) {
+                console.log(data);
+            })
+            .catch(error => console.error(error));
+            
+        });
+    
+        function stripQuotation(string){
+            return string.replace(/(["'])/g, "")
+        }
+    
+        function getData(url = ``) {
+            return fetch(url, {
+                method: "GET",
+                mode: "cors",
+                credentials: "include",
+            })
+            .then(response => response.json()); // parses response to JSON
+        }
+    </script>
+
 <nav id="wrapper">
     <div class="icon">
         <a target="_parent" href="/uphmis230/dhis-web-tracker-capture/index.html">
-            <img src=icons/tracker.png>
+            <img src="tst/zoom.png" >
             <p>Tracker</p>
         </a>
     </div>
 
     <div class="icon">
         <a target="_parent" href="/uphmis230/dhis-web-dataentry/index.action">
-            <img src=icons/dataentry.png>
+            <img src=tst/lightbulb_idea.png>
             <p>Enter data</p>
         </a>
     </div>
 
     <div class="icon">
         <a target="_parent" href="/uphmis230/dhis-web-messaging/index.html#/">
-            <img src=icons/messages.png>
+            <img src=tst/monitor.png>
             <p>Send messages</p>
         </a>
     </div>
 
     <div class="icon">
         <a target="_parent" href="/uphmis230/api/apps/Dhis-Excel-Import/index.html">
-            <img src=icons/excel.png>
+            <img src=tst/pencil.png>
             <p>Import from Excel</p>
         </a>
     </div>
 
     <div class="icon">
         <a target="_parent" href="/uphmis230/dhis-web-event-reports/index.html">
-            <img src=icons/reports.png>
+            <img src=tst/product.png>
             <p>View reports</p>
         </a>
     </div>

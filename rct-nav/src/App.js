@@ -1,26 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import MenuItem from './menuItem.js';
+//import responseData from "./up-response.json";
+import {dhisRequest} from "./api";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      apps: [],
+      isLoaded: false,
+    }
+  }
+
+  componentDidMount(){
+      dhisRequest("dhis-web-commons/menu/getModules.action", "GET").then(result => {
+        this.setState({
+          apps: result.modules,
+          isLoaded: true,
+        })
+      })
+  }
+  render () {  
+    let {apps, isLoaded} = this.state;
+
+    if(!isLoaded){
+      return <div>Loading...</div>
+    } else{  
+      return <nav id="wrapper">{
+        apps.map(appDetails => (
+          <MenuItem key = {appDetails.name}
+                    appDisplayName={appDetails.displayName} 
+                    appName={appDetails.name} 
+                    appIcon={appDetails.icon} 
+                    appLink={appDetails.defaultAction} 
+          />
+        )
+          
+      )}</nav>
+    }
+  };
 }
 
 export default App;

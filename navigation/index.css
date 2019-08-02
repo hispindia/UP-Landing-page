@@ -31,3 +31,7 @@ a:visited {
     border: 2px solid #386692;
     cursor: pointer;
 }
+
+img{
+    width: 60px;
+}
