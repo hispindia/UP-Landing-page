@@ -1,0 +1,28 @@
+
+
+/* Classes */
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+}
+
+/* Classes */
+
+/* Text */
+
+/*Elements*/
+
+ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+body{
+    margin:0;
+}
+

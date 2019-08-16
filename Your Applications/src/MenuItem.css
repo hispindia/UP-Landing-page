@@ -1,0 +1,30 @@
+.iconWrapper{
+    /*margin: 1vw;*/
+    padding: 10px 15px 10px 15px;
+    border: 2px solid white;
+    display: inline-block;
+}
+
+.iconWrapper:hover{
+    border: 2px solid #386692;
+    cursor: pointer;
+}
+
+a:link{
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+img{
+  width: 60px;
+}
+
+img::after{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
