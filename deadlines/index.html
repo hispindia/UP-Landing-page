@@ -1,52 +1,278 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
+<script src="Initials.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
 
-<ol>
+<script type="text/javascript">
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    $(document).ready(function(){
+        getData(`../../../api/me.json?fields=userCredentials[username],organisationUnits[id,name]`)
+            .then( function (data) {
+                getData(`../../../api/29/sqlViews/QRQfetddfm9/data.json?var=org:`+data.organisationUnits[0].id)
+                    .then( function (data1) {
+                        getData(`../../../api/29/sqlViews/PBo1iX5EiZV/data.json?var=user:`+data.userCredentials.username)
+                            .then( function (data2) {
+                                var complete_arr=[];
+                                for(var j=0;j<data2.listGrid.rows.length;j++)
+                                {
+                                    complete_arr.push(data2.listGrid.rows[j][1]);
+                                }
 
-  <li><div id="date">29.01 - </div> <div id="days" class="red">in 1 days</div><div id="title">Form 05 - DHQ STOCK UPHMIS Data Set</div></li>
-  <li><div id="date">04.02</div> <div id="days"> - in 7 days</div><div id="title">Form 16 - DHQ DOHC Annexure VI Data Set</div></li>
-  <li><div id="date">11.02</div> <div id="days"> - in 14 days</div><div id="title">Form 21 - DHQ RBSK - 3 Target Input Yearly</div></li>
+                                var str="";
+                                debugger;
+                                if(dd<16)
+                                {
+                                    var expiry_days=16-dd;
+                                    for(var i=0;i<data1.listGrid.rows.length;i++)
+                                    {
+                                        if(i%2==0)
+                                        {
+                                            debugger;
+                                            if(complete_arr.includes(data1.listGrid.rows[i][1]))
+                                            {
+                                                str += '<li style="vertical-align: middle;border: 1px solid black; list-style-position:inside; display: inline;display:inline-block;height: 30px;">'+ i +'. '+data1.listGrid.rows[i][0]+' Completed'+'</li>';
+                                            }
+                                            else
+                                            {
+                                                str += '<li style="vertical-align: middle;border: 1px solid black; list-style-position:inside; display: inline;display:inline-block;height: 30px;">'+ i +'. '+data1.listGrid.rows[i][0]+' Expires in '+'<b style="color: red">'+expiry_days+' Days'+'</b>'+'</li>';
 
+
+
+                                            }
+                                            str += '</ul>';
+                                        }
+                                        else
+                                        {
+                                            if(complete_arr.includes(data1.listGrid.rows[i][1]))
+                                            {
+                                                str += '<li style="vertical-align: middle;border: 1px solid black; list-style-position:inside; display: inline;display:inline-block;height: 30px;">'+ i +'. '+data1.listGrid.rows[i][0]+' Completed'+'</li>';
+                                            }
+                                            else
+                                            {
+                                                str += '<li style="vertical-align: middle;border: 1px solid black; list-style-position:inside; display: inline;display:inline-block;height: 30px;">'+ i +'. '+data1.listGrid.rows[i][0]+' Expires in '+'<b style="color: red">'+expiry_days+' Days'+'</b>'+'</li>';
+
+
+
+                                            }
+                                            str += '</ul>';
+
+                                        }
+
+
+                                    }}
+                                else
+                                {
+
+                                    var expiry_days=30-dd+16;
+                                    for(var i=0;i<data1.listGrid.rows.length;i++)
+                                    {
+                                        if(i%2==0)
+                                        {
+                                            str += '<li style="vertical-align: middle;border: 1px solid black; list-style-position:inside; display: inline;display:inline-block;height: 30px;">'+ i +'. '+data1.listGrid.rows[i][0]+' Expires in '+'<p style="color:red;">'+expiry_days+' Days'+'</p>'+'</li>';
+                                            str += '</ul>';
+
+                                        }
+                                        else
+                                        {
+                                            str += '<li style="vertical-align: middle;border: 1px solid black; list-style-position:inside; display: inline;display:inline-block;height: 30px;">'+ i +'. '+data1.listGrid.rows[i][0]+' Expires in '+'<p style="color:red;">'+expiry_days+' Days'+'</p>'+'</li>';
+                                            str += '</ul>';
+
+                                        }
+
+                                    }
+                                }
+                                $("#body").append(str);
+
+                            })
+                            .catch(error => console.error(error));
+                    })
+                    .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
+
+    });
+    function daysInMonth (month, year) {
+        return new Date(year, month, 0).getDate();
+    }
+    function getData(url = ``) {
+        return fetch(url, {
+            method: "GET",
+            mode: "cors",
+            credentials: "include",
+        })
+            .then(response => response.json()); // parses response to JSON
+    }
+</script>
+<ol id="body">
+  <!--<li><div id="date">04.02</div> <div id="days"> - in 7 days</div><div id="title">Form 16 - DHQ DOHC Annexure VI Data Set</div></li>-->
+  <!--<li><div id="date">11.02</div> <div id="days"> - in 14 days</div><div id="title">Form 21 - DHQ RBSK - 3 Target Input Yearly</div></li>-->
 </ol>
-
-
 <style>
-p {
-  font-family: 'Roboto', sans-serif;
-  margin-top: 20px;
-  font-size: 1rem;
-}
-ol{
-  margin: 0;
-  padding: 0;
-}
-li{
-  font-family: 'Roboto', sans-serif;
-  display: block;
-  width: 95%;
-  padding: 30px 10px 30px 10px;
-  border: 1px solid #f3f3f3;
-  margin: 0;
-  cursor: pointer;
-  font-size: 1rem;
-}
-li div {
-  display: inline;;
-}
-li #date {
+  li {
+    display: block;
+    height: 3em;
+    line-height: 12px;
+    border: 1px solid #ff0000;
+  }
 
-}
-li #days {
+  li span {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
-}
-li #title {
-  margin-left: 40px;
-}
-li:hover {
-  background-color: #f3f3f3;
-}
-li .red {
-  color:red;
-}
+  li:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+  body{
+    font-family: 'Roboto', sans-serif;
+    font-weight: lighter;
+    text-align: left;
+  }
+  .titleArea{
+    padding-right: 2vw;
+    padding-left: 2vw;
+  }
+  @media (max-width: 588px) {
+    .titleArea, .devider{
+      display: none;
+    }
+  }
+  p {
+    font-family: 'Roboto', sans-serif;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-bottom: 2vw;
+    font-size: 1rem;
+  }
+
+  h1{
+    color: #2a4d6d;
+    font-size: 1.5rem;
+  }
+
+  ol{
+    margin: 0;
+    padding: 0;
+  }
+  li{
+    font-family: 'Roboto', sans-serif;
+    display: block;
+    width: 95%;
+    padding: 0;
+    border: 1px solid #f3f3f3;
+    margin: 0;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  li div {
+    display: inline;;
+  }
+  li #date {
+
+  }
+  li #days {
+
+  }
+  li #title {
+    margin-left: 5px;
+    margin-right: 20px;
+  }
+  li:hover {
+    background-color: #f3f3f3;
+  }
+  li .red {
+    color:red;
+  }
+
+  .centerYaxis{
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .iconLarge{
+    width: 20vw;
+    opacity: 1;
+  }
+  .iconMedium{
+    width: 4vw;
+    opacity: 0.8;
+  }
+  .iconSmall{
+    width: 2.5vw;
+    cursor: pointer;
+    padding-top: 2vw;
+  }
+
+  .right{
+    float: right
+  }
+
+  .left{
+    float: left;
+  }
+  .devider{
+    background-color: #201f1f;
+    width: 0.2vw;
+    height: 100%;
+    opacity: 0.9;
+  }
+
+  .content{
+    flex-direction: column;
+    justify-content: center;
+  }
 </style>
+
+<!--<style>-->
+<!--ul {-->
+<!--list-style-type: none;-->
+<!--padding-inline-start: 0;-->
+<!--margin-block-start: 0;-->
+<!--margin-block-end: 30;-->
+<!--}-->
+<!--p {-->
+<!--font-family: 'Roboto', sans-serif;-->
+<!--font-size: 1rem;-->
+<!--}-->
+<!--ol{-->
+<!--margin: 0;-->
+<!--padding: 0;-->
+<!--}-->
+<!--li{-->
+<!--font-family: 'Roboto', sans-serif;-->
+<!--display: block;-->
+<!--width: 95%;-->
+<!--padding: 0;-->
+<!--border: 1px solid #f3f3f3;-->
+<!--margin: 0;-->
+<!--cursor: pointer;-->
+<!--font-size: 1rem;-->
+<!--margin-block-end: 30;-->
+<!--}-->
+<!--li div {-->
+<!--display: inline;;-->
+<!--}-->
+<!--li #date {-->
+
+<!--}-->
+<!--li #days {-->
+
+<!--}-->
+<!--li #title {-->
+<!--margin-left: 40px;-->
+<!--}-->
+<!--li:hover {-->
+<!--background-color: #f3f3f3;-->
+<!--}-->
+<!--li .red {-->
+<!--color:red;-->
+<!--}-->
+<!--</style>-->
