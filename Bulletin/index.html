@@ -2,55 +2,89 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="index.css">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
+<header class="titleArea left">
+    <!--<img class="iconLarge centerYaxis" src="icons/Archive.png" alt="ArchiveIcon">-->
+    <h1>Your Bulletins:</h1>
+</header>
 
-    <header class="titleArea left">
-        <img class="iconLarge centerYaxis" src="icons/Archive.png" alt="ArchiveIcon">
-        <h1>Your Bulletins:</h1>
-    </header>
+<script src="Initials.js"></script>
 
-    <div class="devider left">
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
 
-    </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        getData(`../../../api/me.json?fields=userCredentials[username],organisationUnits[id,name]`)
+            .then( function (data) {
+                getData(`../../../api/sqlViews/WMVWyinRLh5/data.json?var=user:`+data.userCredentials.username)
+                    .then( function (data2) {
+                        var str="";
+                        for(var i=0;i<data2.listGrid.rows.length;i++)
+                        {
+                            if(i%2==0)
+                            {
+                                str += '<li style="vertical-align: middle;border: 1px solid black; list-style-position:inside; display: inline;display:inline-block;height: 30px;background-color:#276696 "><a href="../../../api/apps/Report-App/index.html#/generate-report" target="_blank" style="text-decoration: none;vertical-align: middle; color:#f3f3f3;font-size: small; font-family: "Arial Black"">'+ i +'. ' +data2.listGrid.rows[i][0]+'</li>';
 
-    <main class="content left">
-          
-      <ol class="centerYaxis">
-      
-        <li class="centerYaxis">
-            <img class="iconMedium centerYaxis" src="icons/health-book-96.png" alt="HealthBookIcon">
-            <div id="title centerYaxis">Form 05 - DHQ STOCK UPHMIS Data Set</div>
-            <img class="iconSmall right centerYaxis" src="icons/download.png" alt="DownloadIcon">
-        </li>
-        <li class="centerYaxis">
-            <img class="iconMedium centerYaxis" src="icons/ecg-96.png" alt="ECGIcon">
-            <div id="title centerYaxis">Form 05 - DHQ STOCK UPHMIS Data Set</div>
-            <img class="iconSmall right centerYaxis" src="icons/download.png" alt="DownloadIcon">
-        </li>
-        <li class="centerYaxis">
-            <img class="iconMedium centerYaxis" src="icons/heart-health-96.png" alt="HeartHealthIcon">
-            <div id="title centerYaxis">Form 05 - DHQ STOCK UPHMIS Data Set</div>
-            <img class="iconSmall right centerYaxis" src="icons/download.png" alt="DownloadIcon">
-        </li>
+                            }
+                            else
+                            {
+                                str += '<li style="vertical-align: middle; border: 1px solid black;list-style-position:inside;display:inline;display:inline-block ;height: 30px;background-color: white"><a href="../../../api/apps/Report-App/index.html#/generate-report" target="_blank" style="text-decoration: none;vertical-align: middle; color:#201f1f; font-size: small;font-family: "Arial Black"">'+ i +'. '+ data2.listGrid.rows[i][0]+'</li>';
 
-        <li class="centerYaxis">
-            <img class="iconMedium centerYaxis" src="icons/obituary-96.png" alt="ObituaryIcon">
-            <div id="title centerYaxis">Form 05 - DHQ STOCK UPHMIS Data Set</div>
-            <img class="iconSmall right centerYaxis" src="icons/download.png" alt="DownloadIcon">
-        </li>
-      
-      </ol>
-    </main>
-      
+                            }
 
+
+                        }
+                        $("#body").append(str);
+                    })
+                    .catch(error => console.error(error));
+
+            })
+            .catch(error => console.error(error));
+
+    });
+    function daysInMonth (month, year) {
+        return new Date(year, month, 0).getDate();
+    }
+    function getData(url = ``) {
+        return fetch(url, {
+            method: "GET",
+            mode: "cors",
+            credentials: "include",
+        })
+            .then(response => response.json()); // parses response to JSON
+    }
+</script>
+<ol id="body">
+</ol>
 
 <style>
+    li {
+        display: block;
+        height: 3em;
+        line-height: 12px;
+        border: 1px solid #ff0000;
+    }
 
+    li span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    li:before{
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+    }
     body{
         font-family: 'Roboto', sans-serif;
         font-weight: lighter;
-        text-align: center;
+        text-align: left;
     }
     .titleArea{
         padding-right: 2vw;
@@ -78,69 +112,70 @@
         margin: 0;
         padding: 0;
     }
-  li{
-    
-    display: block;
-    width: 100%;
-    padding: 1vw 1vw 1vw 1vw;
-    /*border: 1px solid #f3f3f3;*/
-    margin: 0;
-    font-size: 1.1rem;
-  }
-  li div {
-    display: inline;;
-  }
-  li #date {
-  
-  }
-  li #days {
-  
-  }
-  li #title {
-    margin-left: 5px;
-    margin-right: 20px;
-  }
-  li:hover {
-    background-color: #f3f3f3;
-  }
-  li .red {
-    color:red;
-  }
+    li{
+        font-family: 'Roboto', sans-serif;
+        display: block;
+        width: 95%;
+        padding: 0;
+        border: 1px solid #f3f3f3;
+        margin: 0;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+    li div {
+        display: inline;;
+    }
+    li #date {
 
-  .centerYaxis{
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-  .iconLarge{
-      width: 20vw;
-      opacity: 1;
-  }
-  .iconMedium{
-      width: 4vw;
-      opacity: 0.8;
-  }
-  .iconSmall{
-      width: 2.5vw;
-      cursor: pointer;
-      padding-top: 2vw;
-  }
+    }
+    li #days {
 
-  .right{
-      float: right
-  }
+    }
+    li #title {
+        margin-left: 5px;
+        margin-right: 20px;
+    }
+    li:hover {
+        background-color: #f3f3f3;
+    }
+    li .red {
+        color:red;
+    }
 
-  .left{
-      float: left;
-  }
-  .devider{
-      background-color: #201f1f;
-      width: 0.2vw;
-      height: 100%;
-      opacity: 0.9;
-  }
+    .centerYaxis{
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    .iconLarge{
+        width: 20vw;
+        opacity: 1;
+    }
+    .iconMedium{
+        width: 4vw;
+        opacity: 0.8;
+    }
+    .iconSmall{
+        width: 2.5vw;
+        cursor: pointer;
+        padding-top: 2vw;
+    }
 
-  .content{
-    flex-direction: column;
-    justify-content: center;
-  }
-    </style>
+    .right{
+        float: right
+    }
+
+    .left{
+        float: left;
+    }
+    .devider{
+        background-color: #201f1f;
+        width: 0.2vw;
+        height: 100%;
+        opacity: 0.9;
+    }
+
+    .content{
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
