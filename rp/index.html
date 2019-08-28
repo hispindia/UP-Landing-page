@@ -1,21 +1,68 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
+<script src="Initials.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        getData(`../../../api/me.json?fields=userCredentials[username],organisationUnits[id,name]`)
+            .then( function (data) {
+                getData(`../../../api/sqlViews/aL70Z2xG6ke/data.json?var=org:`+data.organisationUnits[0].id)
+                    .then( function (data1) {
+                        getData(`../../../api/sqlViews/ufQLxBN5Gwk/data.json?var=user:`+data.userCredentials.username)
+                            .then( function (data2) {
+                                var str="";
+                                str += 'You have completed '+data2.listGrid.rows[0][0]+' Out of '+data1.listGrid.rows[0][0]+' Forms';
+                                document.getElementById("myProgress").max = data1.listGrid.rows[0][0];
+                                document.getElementById("myProgress").value = data2.listGrid.rows[0][0];
+                                console.log("number total-",data1.listGrid.rows[0][0]);
+                                console.log("number total-completed",data2.listGrid.rows[0][0]);
+                                $("#body").append(str);
+                                $('#myProgress').max = data1.listGrid.rows[0][0];
+                                $('#myProgress').value = data1.listGrid.rows[0][0];
+                            })
+                            .catch(error => console.error(error));
+
+
+                    })
+                    .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
+
+    });
+
+    function getData(url = ``) {
+        return fetch(url, {
+            method: "GET",
+            mode: "cors",
+            credentials: "include",
+        })
+            .then(response => response.json()); // parses response to JSON
+    }
+</script>
 <main>
-<p>You have completed 29 of 44 reports for this period</p>
-<img src="cn_bar.png"></img>
+
+  <progress id="myProgress" value="" max="" style="width: 100%; height: 20%;">
+  </progress>
+  <p id="body"></p>
+  <!--<img src="cn_bar.png"></img>-->
 </main>
 <style>
-main{
-  text-align: center;
-}
-img {
-  width: 100%;
-}
-p {
-  font-family: 'Roboto', sans-serif;
-  margin-top: 20px;
-  font-size: 1rem;
-}
+  main{
+    text-align: center;
+  }
+  img {
+    width: 100%;
+  }
+  p {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 20px;
+    font-size: 1rem;
+  }
 </style>
