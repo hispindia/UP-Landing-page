@@ -1,0 +1,57 @@
+{
+    "name": "reporting-progress",
+    "description": "Dashboard Profile App, where the progress of the reporting schemes assigned to you is displayed.",
+    "homepage": ".",
+    "version": "0.0.1",
+    "private": true,
+    "developer": {
+        "name": "Fredrik Glendrange",
+        "email": "fredrgle@ifi.uio.no",
+        "url": "https://dhis2designlab.github.io/"
+    },
+    "license": "MIT",
+    "icons": {
+        "16": "favicon-16x16.png",
+        "32": "favicon-32x32.png",
+        "48": "favicon-48x48.png"
+    },
+    "manifest.webapp": {
+        "name": "Reporting Progress",
+        "description": "Dashboard Profile App, where the progress of the reporting schemes assigned to you is displayed.",
+        "appType": "DASHBOARD_WIDGET",
+        "activities": {
+            "dhis": {
+                "href": "*"
+            }
+        }
+    },
+    "dependencies": {
+        "@dhis2/app-runtime": "^1.3.0",
+        "@dhis2/ui-core": "^3.7.1",
+        "d3-scale": "^3.0.1",
+        "d3-selection": "^1.4.0",
+        "d3-transition": "^1.2.0",
+        "deepmerge": "^4.0.0",
+        "radium": "^0.25.2",
+        "react": "^16.8.6",
+        "react-avatar": "^3.6.0",
+        "react-dom": "^16.9.0",
+        "styled-components": "^4.3.2",
+        "typeface-roboto": "^0.0.54"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "prebuild": "rimraf build",
+        "build": "react-scripts build && d2-manifest package.json build/manifest.webapp",
+        "postbuild": "rimraf reporting-progress.zip && cd build && bestzip ../reporting-progress.zip *",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "devDependencies": {
+        "bestzip": "^2.1.4",
+        "d2-manifest": "^1.0.0",
+        "prop-types": "^15.7.2",
+        "react-scripts": "^3.0.1",
+        "rimraf": "^2.6.3"
+    }
+}
