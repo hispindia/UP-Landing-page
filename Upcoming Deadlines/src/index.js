@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 import { App } from './components/App'
 
-const developmentServer = 'https://play.dhis2.org/2.32.1'
+const developmentServer = 'http://139.162.61.147/uphmis230'
 const apiVersion = 30
 const rootElement = document.getElementById('root')
 

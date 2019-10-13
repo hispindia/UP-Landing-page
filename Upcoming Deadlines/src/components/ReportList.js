@@ -4,66 +4,67 @@ import { CircularLoader } from '@dhis2/ui-core'
 import  ReportItem from './ReportItem'
 import '../ReportList.css'
 
-
-const query = { systemInfo: {
-        resource: 'system/info'
-    },
-    apps: { 
-        resource: 'action::menu/getModules', 
-        fields: 'name, displayName, icon, defaultAction' 
-    } 
-}
-
-
-function fixMonths (monthNumber){
-    monthNumber = monthNumber + 1
-    if(monthNumber>9) return (monthNumber)
-    return "0" + (monthNumber)
-}
-
 export const ReportList = () => {
+    const query = { user: { 
+        resource: 'me', 
+        fields: 'userCredentials[username], organisationUnits[id,name]' 
+        },
+    }
+
     const { loading, error, data } = useDataQuery(query)
 
     if (loading) return <CircularLoader />
-
-    //if (error) return `ERROR: ${error.message}`
-
-    const today = new Date()
-    const todayString = today.getDate() + "." + fixMonths(today.getMonth())
+    if (error) return `ERROR: ${error.message}`
     
-    console.log("Feilmelding=" + error + ". Innhold=" + data + ".")
-    
-    return <nav id="wrapper">{
-        //data.apps.modules.map(appDetails => (
-          <ol>
-            <ReportItem //key = {appDetails.name}
-                        reportName="Form 05 - DHQ STOCK UPHMIS Data Set" 
-                        todaysDate={todayString}
-                        dueDate={15.09}
-                        reportLink={"#"}
-                        //reportLink={appDetails.defaultAction} 
-                        //contextPath={data.systemInfo.contextPath}
-            />
-            <ReportItem //key = {appDetails.name}
-                        reportName="Form 16 - DHQ DOHC Annexure VI Data Set" 
-                        todaysDate={todayString}
-                        dueDate={18.09}
-                        reportLink={"#"}
-                        //reportLink={appDetails.defaultAction} 
-                        //contextPath={data.systemInfo.contextPath}
-            />
-            <ReportItem //key = {appDetails.name}
-                        reportName="Form 21 - DHQ RBSK - 3 Target Input Yearly" 
-                        todaysDate={todayString}
-                        dueDate={30.09}
-                        reportLink={"#"}
-                        //reportLink={appDetails.defaultAction} 
-                        //contextPath={data.systemInfo.contextPath}
-            />
-          </ol>
-        //))
-        }
-    </nav>  
+    return (<InnerComponent user={data.user}/>) //Chained API request workaround
 }
 
+const InnerComponent = ({ user, }) => {
 
+    function fixMonths(monthNumber){
+        monthNumber = monthNumber + 1
+        if(monthNumber>9) return (monthNumber)
+        return "0" + (monthNumber)
+    }
+
+    let userName = user.userCredentials.username
+    let orgUnit = user.organisationUnits[0].id 
+  
+    const sqlQuery = {
+        deadlines: { 
+            resource: 'sqlViews/QRQfetddfm9/data.json', 
+            var: 'org:' + orgUnit 
+        }, 
+        unknown: { 
+            resource: 'sqlViews/PBo1iX5EiZV/data.json', 
+            var: 'user:' + userName 
+        }, systemInfo: {
+            resource: 'system/info'
+        },
+    }
+
+    const { loading, error, data } = useDataQuery(sqlQuery)
+    const today = new Date()
+  
+    if (loading) return <CircularLoader />
+    if (error) return `ERROR: ${error.message}`
+
+    console.log(data)
+
+    return (
+        <nav id="wrapper">{
+            data.deadlines.listGrid.rows.map(deadlineDetails => (
+              <ol>
+                <ReportItem key = {deadlineDetails[0]}
+                            reportName={deadlineDetails[0]} 
+                            dueDate={(today.getDate() + deadlineDetails[2]) + "." + (fixMonths(today.getMonth()))}
+                            untillDeadline={deadlineDetails[2]}
+                            reportLink={"/dhis-web-dataentry/index.action?organisationUnitId=" + deadlineDetails[4] + "&dataSetId=" + deadlineDetails[1]}
+                            contextPath={data.systemInfo.contextPath}
+                />
+              </ol>
+            ))
+            }
+        </nav>  
+    )
+  }
